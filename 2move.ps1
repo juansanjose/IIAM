@@ -82,15 +82,12 @@ public static void RightClickAtPoint(int x, int y)
 }
 '@
 	
-if ("TrustAllCertsPolicy" -as [type]) {} else {
-        Add-Type "using System.Net;using System.Security.Cryptography.X509Certificates;public class TrustAllCertsPolicy : ICertificatePolicy {public bool CheckValidationResult(ServicePoint srvPoint, X509Certificate certificate, WebRequest request, int certificateProblem) {return true;}}"
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-}
+
 Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,System.Drawing
 
 #Send a click at a specified point
 # while($k -ne 10){
-Start-Process notepad -WindowStyle maximized
+#Start-Process notepad -WindowStyle maximized
 $Pos = [System.Windows.Forms.Cursor]::Position
 [Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)
 Start-Sleep -Seconds 1
@@ -98,18 +95,18 @@ Start-Sleep -Seconds 1
 [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1 , 1 )
 # [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1000 , 1 )
 
-for (($i = 0), ($j = 0); $i -lt 1920; $i++)
+for (($i = 0), ($j = 0); $i -lt 1920; $i=$i+10)
 {
-     Start-Sleep -m 0.51
+     Start-Sleep -Milliseconds 1
 
  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( $i ,  1 )
     
 
 
 }
- $Pos = [System.Windows.Forms.Cursor]::Position
+ #$Pos = [System.Windows.Forms.Cursor]::Position
 # [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( (($Pos.X) + 10) , (($Pos.Y)+240) )
-[Clicker]::LeftClickAtPoint($Pos.X , $Pos.Y)
+#[Clicker]::LeftClickAtPoint($Pos.X , $Pos.Y)
 #[Clicker]::LeftClickAtPoint(1920 , 0)
 # $k++
 # }
