@@ -88,25 +88,68 @@ Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,Sys
 #Send a click at a specified point
 # while($k -ne 10){
 #Start-Process notepad -WindowStyle maximized
-$Pos = [System.Windows.Forms.Cursor]::Position
-[Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)
-Start-Sleep -Seconds 1
+# $Pos = [System.Windows.Forms.Cursor]::Position
+# [Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)
+# Start-Sleep -Seconds 1
 
-[System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1 , 1 )
-# [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1000 , 1 )
+# [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1 , 1 )
+# # [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1000 , 1 )
 
-for (($i = 0), ($j = 0); $i -lt 1920; $i=$i+10)
-{
-     Start-Sleep -Milliseconds 1
+# for (($i = 0), ($j = 0); $i -lt 1920; $i=$i+10)
+# {
+#      Start-Sleep -Milliseconds 1
 
- [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( $i ,  1 )
+#  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( $i ,  1 )
     
 
 
-}
+# }
+
+
+
  #$Pos = [System.Windows.Forms.Cursor]::Position
 # [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( (($Pos.X) + 10) , (($Pos.Y)+240) )
 #[Clicker]::LeftClickAtPoint($Pos.X , $Pos.Y)
 #[Clicker]::LeftClickAtPoint(1920 , 0)
 # $k++
+# }
+ $wshell = New-Object -ComObject Wscript.Shell
+
+ $wshell.Popup("Operation Completed",0,"Done",0x1)
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+
+public static class DesktopWindows {
+    public struct Rect {
+       public int Left { get; set; }
+       public int Top { get; set; }
+       public int Right { get; set; }
+       public int Bottom { get; set; }
+    }
+
+    [DllImport("user32.dll")]
+    public static extern bool GetWindowRect(IntPtr hwnd, ref Rect rectangle);
+}
+'@
+
+# $processName = 'notepad'
+# $processesByName = [System.Diagnostics.Process]::GetProcessesByName($processName)
+
+# foreach($process in $processesByName) {
+#     if($process.MainWindowHandle -ne 0) {
+#         $windowRect = [DesktopWindows+Rect]::new()
+#         $return = [DesktopWindows]::GetWindowRect($process.MainWindowHandle,[ref]$windowRect)
+#             if($return) {
+#                 [PSCustomObject]@{ProcessName=$processName; ProcessID=$process.Id; MainWindowHandle=$process.MainWindowHandle; WindowTitle=$process.MainWindowTitle; Top=$windowRect.Top; Left=$windowRect.Left;}
+#             }
+#             else
+#             {
+#                 echo 'Failed to get window rect'
+#             }
+#     }
+#     else
+#     {
+#         echo "No MainWindowHandle for $processName"
+#     }
 # }
