@@ -76,7 +76,6 @@ public static void RightClickAtPoint(int x, int y)
     //Left mouse button up
     input[2].mi.dwFlags = MOUSEEVENTF_RIGHTUP;
     SendInput(3, input, Marshal.SizeOf(input[0]));
-    System.Console.WriteLine(input);
 }
 
 }
@@ -92,29 +91,32 @@ Add-Type -TypeDefinition $cSource -ReferencedAssemblies System.Windows.Forms,Sys
  [Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)
 # Start-Sleep -Seconds 1
 
-#  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1 , 1 )
+  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 10 , 10 )
 #  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( 1000 , 1 )
 
-for (($i = 0), ($j = 0); ($i -lt 800),($j -lt 800); ($i=$i+10),($i=$i+10))
+for (($i = 0), ($j = 0); ($i -le 1000); ($i=$i+4),($j=$j+4))
 {
      Start-Sleep -Milliseconds 10
 
  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( $i ,  $j )
- [Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)  
- [Clicker]::LeftClickAtPoint($Pos.X,$Pos.Y)
+   
 
 }
-for (($i = 0), ($j = 0); ($i -le 10),($j -le 10); ($i=$i-10),($i=$i-10))
+$Pos = [System.Windows.Forms.Cursor]::Position
+[Clicker]::LeftClickAtPoint($Pos.X,$Pos.Y)
+[Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)  
+
+for (($i = $Pos.X), ($j = $Pos.Y); ($i -gt 10); ($i=$i-4),($j=$j-4))
 {
      Start-Sleep -Milliseconds 10
 
  [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( $i ,  $j )
- [Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)  
- [Clicker]::LeftClickAtPoint($Pos.X,$Pos.Y)
+  
 
 }
 
-
+[Clicker]::LeftClickAtPoint($Pos.X,$Pos.Y)
+[Clicker]::RightClickAtPoint($Pos.X,$Pos.Y)
 
  #$Pos = [System.Windows.Forms.Cursor]::Position
 # [System.Windows.Forms.Cursor]::Position = New-Object System.Drawing.Point( (($Pos.X) + 10) , (($Pos.Y)+240) )
